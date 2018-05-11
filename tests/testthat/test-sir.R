@@ -1,0 +1,94 @@
+context("SIR functions")
+
+test_that("SIR from deSolve is correct", {
+
+    T <- 100
+    init_vals <- c(950, 50, 0)
+    beta <- .1
+    gamma <- .03
+    N <- sum(init_vals)
+    step <- 1
+
+    ## Plot the SIR
+    do_plot = TRUE
+    results <- SIR(T, init_vals, beta,
+                   gamma, step, SIR_inner, do_plot)
+
+    ## extract the probabilities of transition
+    probs <- extract_probs_sir(results, beta, gamma)
+})
+
+
+test_that("the CM simulation for the SIR", {
+    L <- 5000 # number of runs
+    S <- matrix(0, nrow = T+1, ncol = L)
+    I <- matrix(0, nrow = T+1, ncol = L)
+    R <- matrix(0, nrow = T+1, ncol = L)
+    cm_sim_list <- list(S=S, I=I, R=R)
+    cm_sim_list <- fill_inits_sir(init_vals, cm_sim_list)
+
+
+
+
+    ## Run the simulation
+    cm_sim_list <- run_cm_sir(T, init_vals,
+                              probs, L, cm_sim_list)
+    counts <- cm_sim_list$S
+    head(counts)
+
+    ## Plotting the average
+    cm_mean <- summary_sims(cm_sim_list, var_names = c("S", "I", "R")) * 100 / N
+    cm_mean$time <- 0:(nrow(cm_mean)-1)
+    df_melt <- reshape2::melt(cm_mean, id = "time", variable.name = "sim")
+    ggplot2::ggplot(df_melt, ggplot2::aes(x=time, y=value * 100 / N, col=sim)) +
+        ggplot2::geom_line(size=3)
+
+})
+
+test_that("AM functions", {
+    L <- 5000
+    T <- 100
+    agents <- vector("list", L)
+    agents <- initialize_agents(T, N, init_vals, agents)
+
+    t <- proc.time()[3]
+    out_agents <- run_am_sir(T, probs, L, agents)
+    proc.time()[3] - t
+
+    ## saveRDS(out_agents, "../../sims/out_agents.RDS")
+    agents_sims <- summarize_agents(out_agents)
+    am_sim_list <- agents_sims
+
+    ## Plotting the average
+    am_mean <- summary_sims(am_sim_list, var_names = c("S", "I", "R")) * 100 / N
+    df_melt <- reshape2::melt(am_mean, id = "time", variable.name = "sim")
+    ggplot2::ggplot(df_melt, ggplot2::aes(x=time, y=value * 100 / N, col=sim)) +
+        ggplot2::geom_line(size=3)
+
+
+
+})
+
+test_that("overlays", {
+
+    ## Average
+    
+    sum1 <- cm_mean
+    sum2 <- am_mean
+    plot_overlap(sum1, sum2)
+#    ggplot2::ggsave("../../images/sir-mean.pdf",
+                    width=10,height=8)
+
+    ## Variance
+    ## Plotting the variance
+    am_var <- summary_sims(am_sim_list, fxn=rowVar,
+                           var_names = c("S", "I", "R"))
+    cm_var <- summary_sims(cm_sim_list, fxn=rowVar,
+                           var_names = c("S", "I", "R"))
+    plot_overlap(cm_var, am_var,
+                 summary_name = "Variance in states",
+                 ylim=c(0,max(max(cm_var), max(am_var))))
+ #   ggplot2::ggsave("../../images/sir-var.pdf",
+                    width=10,height=8)
+    
+})
