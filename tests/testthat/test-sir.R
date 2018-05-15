@@ -94,7 +94,7 @@ test_that("overlays", {
                  summary_name = "Variance in states",
                  ylim=c(0,max(max(cm_var), max(am_var))),
                  plot_dash = FALSE, size = 2)
-    ggplot2::ggsave("../../images/sir-var.pdf",
+   ##  ggplot2::ggsave("../../images/sir-var.pdf",
                     ## width=10,height=8)
     
 })
@@ -308,7 +308,7 @@ test_that("Looking at s2ir2", {
                              L=L, beta1=beta1, gamma1=gamma1,
                              beta2=beta2, gamma2=gamma2)
     g_avg_am
-    ggplot2::ggsave("../../images/am-sir2-avg.pdf", height=6, width = 8)
+    ## ggplot2::ggsave("../../images/am-sir2-avg.pdf", height=6, width = 8)
 
     ## Variance
 
@@ -341,40 +341,40 @@ test_that("Looking at s2ir2", {
                                                 tex_symbol = cm_symbols[ind])
                              })
 
-    ## png("../../images/am-sir2-time.png", height=1000)
-    ## do.call("grid.arrange", c(g_list_am_times, ncol=1))
-    ## dev.off()
+    png("../../images/am-sir2-time.png", height=1000)
+    do.call("grid.arrange", c(g_list_am_times, ncol=1))
+    dev.off()
 
 
-    ## ## major rearrangement of time steps
+    ## major rearrangement of time steps
 
-    ## ## s1 and s2
-    ## pdf("../../images/am-cm-s1s2.pdf", height=10, width = 12)
-    ## grid.arrange(g_list_cm_times[[1]], g_list_am_times[[1]],
-    ##              g_list_cm_times[[2]], g_list_am_times[[2]],
-    ##              ncol = 2)
-    ## dev.off()
-
-
-    ## ## I
-    ## pdf("../../images/am-cm-i.pdf", height=5, width = 12)
-    ## grid.arrange(g_list_cm_times[[3]], g_list_am_times[[3]],
-    ##              ncol = 2)
-    ## dev.off()
+    ## s1 and s2
+    pdf("../../images/am-cm-s1s2.pdf", height=10, width = 12)
+    grid.arrange(g_list_cm_times[[1]], g_list_am_times[[1]],
+                 g_list_cm_times[[2]], g_list_am_times[[2]],
+                 ncol = 2)
+    dev.off()
 
 
-    ## ## r1
-    ## pdf("../../images/am-cm-r1.pdf", height=5, width = 12)
-    ## grid.arrange(g_list_cm_times[[4]], g_list_am_times[[4]],
-    ##              ncol = 2)
-    ## dev.off()
+    ## I
+    pdf("../../images/am-cm-i.pdf", height=5, width = 12)
+    grid.arrange(g_list_cm_times[[3]], g_list_am_times[[3]],
+                 ncol = 2)
+    dev.off()
 
 
-    ## ## r2
-    ## pdf("../../images/am-cm-r2.pdf", height=5, width = 12)
-    ## grid.arrange(g_list_cm_times[[5]], g_list_am_times[[5]],
-    ##              ncol = 2)
-    ## dev.off()
+    ## r1
+    pdf("../../images/am-cm-r1.pdf", height=5, width = 12)
+    grid.arrange(g_list_cm_times[[4]], g_list_am_times[[4]],
+                 ncol = 2)
+    dev.off()
+
+
+    ## r2
+    pdf("../../images/am-cm-r2.pdf", height=5, width = 12)
+    grid.arrange(g_list_cm_times[[5]], g_list_am_times[[5]],
+                 ncol = 2)
+    dev.off()
 
 
 })
