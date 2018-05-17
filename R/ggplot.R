@@ -48,10 +48,19 @@ plot_overlap <- function(sum1, sum2, col1=c("blue", "darkred", "darkgreen"),
     }
     cols <- c(col1, col2)
 
+    legend_names <- c(paste0(tex_symbol,
+                            "-", approach1),
+                     paste0(tex_symbol, "-",
+                            approach2))
+    legend_names_tex <- lapply(legend_names, function(x){
+        latex2exp::TeX(sprintf("%s", x))
+    })
+
     g <- ggplot2::ggplot(data = df_melt, ggplot2::aes(x = time, y = value, colour=Type,
                                                       linetype=factor(type), group=Type))+
         ggplot2::geom_line(size=size) +
-        ggplot2::scale_color_manual(values = cols, labels = cat_names) +
+        ggplot2::scale_color_manual(values = cols,
+                                    labels = legend_names_tex) +
         ggplot2::guides(linetype=FALSE) +
         my_theme() +
         ggplot2::labs(title = summary_name,
@@ -61,8 +70,6 @@ plot_overlap <- function(sum1, sum2, col1=c("blue", "darkred", "darkgreen"),
         ggplot2::ylim(ylim)
                       
                       
-
-    print(g)
     return(g)
 
 }
@@ -195,6 +202,7 @@ plot_draws_s2ir2 <- function(counts,
 #' @param L total number of runs
 #' @param ylab label for ylab
 #' @param cols used for graph
+#' @param tex_symbol symbols used to produce tex
 #' @param size line size
 #' @param approach either CM or AM
 #' @return a plot of the summary function
@@ -202,7 +210,11 @@ plot_summary <- function(s_sims, sum_name = "Mean Proportion",
                          cats = c("S1", "S2", "I", "R1", "R2"),
                          beta1=.6, beta2=.8, gamma1=.1, gamma2=.2,
                          N=1000,L=5000, ylab= "% of Population",
-                         cols = c("blue", "orange", "darkred", "darkgreen", "purple"),
+                         cols = c("blue", "orange", "darkred",
+                                  "darkgreen", "purple"),
+                         tex_symbol = c("\\hat{S}_1(t)", "\\hat{S}_2(t)",
+                                        "\\hat{I}(t)",
+                                        "\\hat{R}_1(t)", "\\hat{R}_2(t)"),
                          size = 2,
                          approach = "CM"
                          ){
@@ -216,6 +228,10 @@ plot_summary <- function(s_sims, sum_name = "Mean Proportion",
         rng <- range(df_melt$value)
     }
 
+    legend_names <- paste0(tex_symbol, "-", approach)
+    legend_names_tex <- lapply(legend_names, function(x){
+        latex2exp::TeX(sprintf("%s", x))
+    })
     g <- ggplot2::ggplot(data = df_melt,
                          ggplot2::aes(x = time, y = value, colour = series)) +
         ggplot2::geom_line(size=size) + 
@@ -225,7 +241,7 @@ plot_summary <- function(s_sims, sum_name = "Mean Proportion",
                                     N, L,  beta1, beta2, gamma1, gamma2))) +
         ggplot2::labs(col = "Type") + my_theme() +
         ggplot2::scale_color_manual(values = cols,
-                                    labels = cats) 
+                                    labels = legend_names_tex) 
 
     return(g)
     

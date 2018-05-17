@@ -66,7 +66,6 @@ cm_sim_list <- fill_inits_sir(init_vals, cm_sim_list)
 ## Run the simulation
 cm_sim_list <- run_cm_sir(T, init_vals,
 probs, L, cm_sim_list)
-counts <- cm_sim_list$S
 ```
 
 Then, run the stochastic SIR-AM, also with **$L=50$** simulations.  The function `summarize_agents()` puts the output agents into a format that is identical to stochastic SIR-CM output.
@@ -95,7 +94,8 @@ cm_mean <- summary_sims(cm_sim_list, var_names = c("S", "I", "R")) * 100 / N
 am_mean <- summary_sims(am_sim_list, var_names = c("S", "I", "R")) * 100 / N
 g <- plot_overlap(cm_mean, am_mean, plot_dash = TRUE,
              size = 2, L=L)
-```
+g
+```                                                                                                                                                                                                                                                  
 
 Figure (2) is the variance of of the agents in each state for a given time for the SIR-system.
 
@@ -113,6 +113,7 @@ g <- plot_overlap(cm_var, am_var,
   ylim = c(0, max(max(cm_var), max(am_var))),
   plot_dash = FALSE,
   size = 2)
+g
 ```
 
 Figure (3) is the actual simulations (sample paths) for each state, for both the CM and AM.

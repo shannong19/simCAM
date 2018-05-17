@@ -35,7 +35,6 @@ test_that("the CM simulation for the SIR", {
     ## Run the simulation
     cm_sim_list <- run_cm_sir(T, init_vals,
                               probs, L, cm_sim_list)
-    counts <- cm_sim_list$S
 
 
     ## Plotting the average
@@ -81,8 +80,8 @@ test_that("overlays", {
     sum2 <- am_mean
     plot_overlap(sum1, sum2, plot_dash = TRUE,
                  size = 2)
-   ## ggplot2::ggsave("../../images/sir-mean.pdf",
-   ##                 width=10,height=8)
+  ## ggplot2::ggsave("../../images/sir-mean.pdf",
+         ##          width=10,height=8)
 
     ## Variance
     ## Plotting the variance
@@ -94,8 +93,8 @@ test_that("overlays", {
                  summary_name = "Variance in states",
                  ylim=c(0,max(max(cm_var), max(am_var))),
                  plot_dash = FALSE, size = 2)
-   ##  ggplot2::ggsave("../../images/sir-var.pdf",
-                    ## width=10,height=8)
+   ## ggplot2::ggsave("../../images/sir-var.pdf",
+     ##              width=10,height=8)
     
 })
 
@@ -185,8 +184,8 @@ test_that("Looking at s2ir2", {
                      gamma1=gamma1, gamma2=gamma2, N=N, L=L)
     ## saveRDS(sim_list_all, "../../sims/cm-sim-list-sir2.RDS")
 
-    ## read_cm <- readRDS("cm-sim-list-sir2.RDS")
-    ## sim_list <- read_cm$sim_list
+    ## read_cm <- readRDS("../../sims/cm-sim-list-sir2.RDS")
+    cm_sim_list <- read_cm$sim_list
     ## Plotting all the draws
     cols <- c("Blues", "Oranges", "Reds", "Greens", "Purples")
     cm_titles <- c("Susceptible 1", "Susceptible 2",
@@ -223,7 +222,7 @@ test_that("Looking at s2ir2", {
     ## Variance
 
     cm_var <- summary_sims(cm_sim_list, fxn=rowVar)
-    g_var_cm <- plot_summary(cm_var, sum_name = "Variance Proportion",
+    g_var_cm <- plot_summary(cm_var, sum_name = "Variance",
                              ylab="Variance within Compartment",
                              L=L, beta1=beta1, gamma1=gamma1,
                              beta2=beta2, gamma2=gamma2)
@@ -265,7 +264,7 @@ test_that("Looking at s2ir2", {
 
     ## saveRDS(out_agents, "../../sims/agents-sir2.RDS")
 
-    ##    out_agents <- readRDS("../../sims/agents-sir2.RDS")
+    ## out_agents <- readRDS("../../sims/agents-sir2.RDS")
     agents_sims <- summarize_agents(out_agents, n_states = 5)
     am_sim_list <- agents_sims
 
@@ -313,11 +312,12 @@ test_that("Looking at s2ir2", {
     ## Variance
 
     am_var <- summary_sims(am_sim_list, fxn=rowVar)
-    g_var_am <- plot_summary(am_var, sum_name = "Variance Proportion",
+    g_var_am <- plot_summary(am_var, sum_name = "Variance",
                              ylab="Variance within Compartment",
                              approach = "AM",
                              L=L, beta1=beta1, gamma1=gamma1,
                              beta2=beta2, gamma2=gamma2)
+    g_var_am
     ## ggplot2::ggsave("../../images/am-sir2-var.pdf", height=6, width = 8)
 
 
