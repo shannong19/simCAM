@@ -1,8 +1,8 @@
 ---
 title: "Figures - CM AM"
-author: "Shannon Gallagher"
+author: "Shannon Gallagher and William F. Eddy"
 date: "May 15, 2018"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
