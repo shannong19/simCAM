@@ -1,8 +1,8 @@
 ---
 title: "Figures - CM AM"
 author: "Shannon Gallagher and William F. Eddy"
-date: "May 15, 2018"
-output: html_document
+date: "June 11, 2018"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -23,6 +23,11 @@ library(ggplot2)
 library(RColorBrewer)
 library(reshape2)
 library(gridExtra)
+```
+
+We set the seed.
+```{r seed}
+set.seed(19)
 ```
 
 
