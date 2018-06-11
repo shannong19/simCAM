@@ -92,9 +92,10 @@ test_that("overlays", {
     plot_overlap(cm_var, am_var,
                  summary_name = "Variance in states",
                  ylim=c(0,max(max(cm_var), max(am_var))),
-                 plot_dash = FALSE, size = 2)
-   ## ggplot2::ggsave("../../images/sir-var.pdf",
-     ##              width=10,height=8)
+                 plot_dash = FALSE, size = 2,
+                 ylab = "Variance of state totals")
+    ## ggplot2::ggsave("../../images/sir-var.pdf",
+       ##          width=10,height=8)
     
 })
 

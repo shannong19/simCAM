@@ -112,7 +112,8 @@ g <- plot_overlap(cm_var, am_var,
   summary_name = "Variance in states",
   ylim = c(0, max(max(cm_var), max(am_var))),
   plot_dash = FALSE,
-  size = 2)
+  size = 2,
+  ylab = "Variance of state totals")
 g
 ```
 
@@ -165,7 +166,7 @@ do.call("grid.arrange", c(g_list_cm, g_list_am, ncol=2, as.table = FALSE))
 
 We also have similar simulations for the S$^2$IR$^2$-system.
 
-We first extract the probabilities from the deterministic S$^2$IR$^2$-CM with the following ste of initial parameters.
+We first extract the probabilities from the deterministic S$^2$IR$^2$-CM with the following set of initial parameters.
 
 ```{r s2ir2-cm-det}
 T <- 50
@@ -216,7 +217,7 @@ agents_sims <- summarize_agents(out_agents, n_states = 5)
 am_sim_list <- agents_sims
 ```
 
-We then make our analagous plots of the first three figures, Figures (5)-(7).
+We then make our analogous plots of the first three figures, Figures (5)-(7).
 
 ```{r s2ir2-sum, fig.width=8, fig.height=4}
 ## Mean
