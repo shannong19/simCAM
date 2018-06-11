@@ -45,7 +45,7 @@ loaded via a namespace (and not attached):
 
 All code is written in `R` and is available from the package `simCAM` available at [https://github.com/shannong19/simCAM](https://github.com/shannong19/simCAM).
 
-Instructions for using the code and reproducing figures is available at [https://github.com/shannong19/simCAM/blob/master/figure_production/figures-am-cm.pdf](https://github.com/shannong19/simCAM/figure_production/figures-am-cm.pdf).
+Instructions for using the code and reproducing figures is available at [https://github.com/shannong19/simCAM/blob/master/figure_production/figures-am-cm.pdf](./figure_production/figures-am-cm.pdf).
 
 ## Structure
 
