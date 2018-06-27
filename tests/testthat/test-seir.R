@@ -1,0 +1,34 @@
+context("SEIR functions")
+library(gridExtra)
+
+test_that("SEIR from deSolve is correct", {
+
+    T <- 365
+    init_vals <- c(9500, 0, 500, 0) #SEIR 
+    beta <- .06
+    gamma <- .03
+    alpha <- .02
+    N <- sum(init_vals)
+    step <- 1
+    ## Plot the SIR
+    do_plot = TRUE
+    seir_data <- SEIR(T, init_vals, beta, gamma,
+                   alpha, step, SEIR_inner, do_plot)
+    ## Optimize function
+    inits <- c(beta, gamma, alpha)
+    params <- optim(par=inits, fn=SSE_SEIR, data=seir_data,
+                    init_vals = init_vals, hessian = TRUE)
+    ## Change SEIR data to SIR
+    sir_data <- data.frame(t = results$t,
+                           S = results$S + results$E,
+                           I = results$I,
+                           R = results$R)
+    init_sir <- inits[-3]
+    init_vals_sir <- init_vals[-2]
+    params_sir <- optim(par=init_sir, fn=SSE_SIR, data=sir_data,
+                    init_vals = init_vals_sir, hessian = TRUE)
+    r0_seir <- params$par[1] / params$par[2]
+    r0_sir <- params_sir$par[1] / params_sir$par[2]
+    c(r0_seir, r0_sir)
+    
+})

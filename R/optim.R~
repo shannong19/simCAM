@@ -1,0 +1,4 @@
+SSE <- function(params, data, fxn, init_vals){
+    
+
+}
